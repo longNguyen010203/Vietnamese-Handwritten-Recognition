@@ -1,1 +1,1 @@
-Tải dataset lại đường dẫn https://www.kaggle.com/datasets/overvisual/vn-handwritten-images
+Tải dataset tại đường dẫn https://www.kaggle.com/datasets/overvisual/vn-handwritten-images
