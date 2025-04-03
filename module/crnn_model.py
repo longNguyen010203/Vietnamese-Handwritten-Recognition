@@ -11,47 +11,47 @@ import keras.backend as K
 inputs = Input(shape=(118, 2167, 1))
 
 # Block 1: Lớp tích chập + MaxPooling
-x = Conv2D(64, (3, 3), padding='same')(inputs)   # Convolutional layer với 64 filters, kernel size 3x3
-x = MaxPool2D(pool_size=3, strides=3)(x)         # Max Pooling để giảm kích thước đặc trưng
-x = Activation('relu')(x)                         # Hàm kích hoạt ReLU
+x = Conv2D(64, (3, 3), padding='same')(inputs)   
+x = MaxPool2D(pool_size=3, strides=3)(x)        
+x = Activation('relu')(x)                       
 x_1 = x  # Lưu lại đầu ra của Block 1 để sử dụng nếu cần
 
 # Block 2: Tăng số filters
-x = Conv2D(128, (3, 3), padding='same')(x)       # Convolutional layer với 128 filters
-x = MaxPool2D(pool_size=3, strides=3)(x)         # Max Pooling
-x = Activation('relu')(x)                         # ReLU activation
+x = Conv2D(128, (3, 3), padding='same')(x)      
+x = MaxPool2D(pool_size=3, strides=3)(x)         
+x = Activation('relu')(x)                       
 x_2 = x  # Lưu lại đầu ra của Block 2
 
 # Block 3: Thêm Batch Normalization để ổn định quá trình huấn luyện
-x = Conv2D(256, (3, 3), padding='same')(x)       # Convolutional layer với 256 filters
-x = BatchNormalization()(x)                      # Chuẩn hóa Batch Normalization
-x = Activation('relu')(x)                         # ReLU activation
+x = Conv2D(256, (3, 3), padding='same')(x)       
+x = BatchNormalization()(x)                    
+x = Activation('relu')(x)                  
 x_3 = x  # Lưu lại đầu ra của Block 3
 
 # Block 4: Residual Connection (Kết nối tắt)
-x = Conv2D(256, (3, 3), padding='same')(x)       # Convolutional layer với 256 filters
-x = BatchNormalization()(x)                      # Batch Normalization
-x = Add()([x, x_3])  # Cộng đầu vào với đầu ra trước đó (Residual Connection)
-x = Activation('relu')(x)                         # ReLU activation
+x = Conv2D(256, (3, 3), padding='same')(x)  
+x = BatchNormalization()(x)                      
+x = Add()([x, x_3])  
+x = Activation('relu')(x)                         
 x_4 = x  # Lưu lại đầu ra của Block 4
 
 # Block 5: Tăng số lượng filters
-x = Conv2D(512, (3, 3), padding='same')(x)       # Convolutional layer với 512 filters
-x = BatchNormalization()(x)                      # Batch Normalization
-x = Activation('relu')(x)                         # ReLU activation
+x = Conv2D(512, (3, 3), padding='same')(x)       
+x = BatchNormalization()(x)                     
+x = Activation('relu')(x)                         
 x_5 = x  # Lưu lại đầu ra của Block 5
 
 # Block 6: Residual Connection với 512 filters
-x = Conv2D(512, (3, 3), padding='same')(x)       # Convolutional layer với 512 filters
-x = BatchNormalization()(x)                      # Batch Normalization
-x = Add()([x, x_5])  # Kết nối tắt để giữ lại thông tin
-x = Activation('relu')(x)                         # ReLU activation
+x = Conv2D(512, (3, 3), padding='same')(x)       
+x = BatchNormalization()(x)                     
+x = Add()([x, x_5])  
+x = Activation('relu')(x)                       
 
 # Block 7: Lớp tích chập cuối cùng với 1024 filters
-x = Conv2D(1024, (3, 3), padding='same')(x)      # Convolutional layer với 1024 filters
-x = BatchNormalization()(x)                      # Batch Normalization
-x = MaxPool2D(pool_size=(3, 1))(x)               # Max Pooling theo chiều cao
-x = Activation('relu')(x)                         # ReLU activation
+x = Conv2D(1024, (3, 3), padding='same')(x)      
+x = BatchNormalization()(x)                    
+x = MaxPool2D(pool_size=(3, 1))(x)             
+x = Activation('relu')(x)                       
 
 # Thêm một lớp MaxPooling nữa để giảm chiều cao ảnh
 x = MaxPool2D(pool_size=(3, 1))(x)
@@ -73,4 +73,4 @@ outputs = Dense(140+1, activation='softmax')(blstm_2)
 model = Model(inputs, outputs)
 
 # Tải trọng số của mô hình đã được huấn luyện trước đó
-model.load_weights('./data/model_weights.hdf5')
+model.load_weights('./weight_model/model_weights.hdf5')

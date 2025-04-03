@@ -241,10 +241,10 @@ def main():
                 message_container.error(
                     'Vui lòng upload hoặc xử lý ảnh đầu vào')
 
-        st.title("Tên thành viên thực hiện")
+        st.title("Thành viên thực hiện")
         st.text("A45240 - Nguyễn Xuân Giáp")
         st.text("A44306 - Nguyễn Thành Long")
         st.text("A45751 - Trần Tuấn Anh")
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()
